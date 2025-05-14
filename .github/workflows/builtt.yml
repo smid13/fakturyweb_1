@@ -1,0 +1,36 @@
+name: Build .exe with PyInstaller
+
+on:
+  push:
+    branches:
+      - main  # Pokud používáte jinou větev, upravte ji
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Můžete použít i jiné prostředí, pokud chcete (např. windows-latest)
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Verze Pythonu, kterou používáte (např. 3.9 nebo 3.8)
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Pokud máte requirements.txt, jinak přidejte potřebné knihovny
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Build .exe with PyInstaller
+        run: pyinstaller --onefile --distpath dist --workpath build --specpath . your_script.py  # Změňte na název vašeho skriptu
+
+      - name: Upload .exe as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: your_script-exe  # Název artefaktu
+          path: dist/your_script.exe  # Cesta k vytvořenému .exe souboru (změňte na název vašeho .exe souboru)
