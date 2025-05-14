@@ -27,7 +27,7 @@ jobs:
         run: pip install pyinstaller
 
       - name: Build .exe with PyInstaller
-        run: pyinstaller --onefile --distpath dist --workpath build --specpath . your_script.py  # Změňte na název vašeho skriptu
+        run: pyinstaller --onefile --distpath dist --workpath build --specpath . Untitled7.ipynb  # Změňte na název vašeho skriptu
 
       - name: Upload .exe as artifact
         uses: actions/upload-artifact@v3  # Upravte verzi na @v3
