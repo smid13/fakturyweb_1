@@ -30,7 +30,7 @@ jobs:
         run: pyinstaller --onefile --distpath dist --workpath build --specpath . your_script.py  # Změňte na název vašeho skriptu
 
       - name: Upload .exe as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Upravte verzi na @v3
         with:
           name: your_script-exe  # Název artefaktu
           path: dist/your_script.exe  # Cesta k vytvořenému .exe souboru (změňte na název vašeho .exe souboru)
