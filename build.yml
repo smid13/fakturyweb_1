@@ -1,0 +1,39 @@
+name: Build .exe with PyInstaller
+
+on:
+  push:
+    branches:
+      - main  # Workflow se spustí, když se něco pushne na hlavní větev
+  pull_request:
+    branches:
+      - main  # Workflow se spustí při pull requestu na hlavní větev
+
+jobs:
+  build:
+    runs-on: windows-latest  # Spuštění na Windows Runneru (takže můžete generovat .exe soubor)
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'  # Můžete použít libovolnou verzi Pythonu
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller  # Instalace PyInstalleru pro převod na .exe
+        pip install -r requirements.txt  # Pokud máte soubor s požadavky (např. requests)
+
+    - name: Build executable
+      run: |
+        pyinstaller --onefile faktury.py  # Převod Python skriptu na .exe
+
+    - name: Upload .exe as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: faktury-exe
+        path: dist/faktury.exe  # Cesta k vygenerovanému .exe souboru
+
